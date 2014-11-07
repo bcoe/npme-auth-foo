@@ -107,7 +107,7 @@ FooAuthorizer.prototype.authorize = function(request, cb) {
 module.exports = FooAuthorizer;
 ```
 
-The authenticate method receives a request object, and a cb to execute once authorization is complete.
+The authenticate method receives a request object and a cb to execute once authorization is complete.
 
 ## The Request Object
 
@@ -115,7 +115,7 @@ The request object provided to `authorize` contains four important pieces of inf
 
 * **`request.path`:** a path representing the package authorization is being performed for.
 * **`request.method`:** the type of request being authorized: `GET` for reads, `PUT` for publishes.
-* **`request.body:`** the package.json contents (this is sent only for publishes).
+* **`request.body:`** the package.json contents (this is only sent for publishes).
 * **`request.headers.authorization:`** contains the token issued by the authenticator.
 
 ## The Callback
@@ -136,7 +136,7 @@ return cb(null, true); // authorization was successful.
 
 The information stored in `request.body` could potentially contain information that changes package permissions.
 
-In the case of [npme-auth-githb](https://github.com/npm/npme-auth-github), we use the `repository` field in the package.json to determine who has write permissions for a package. For this reason, after the initial publication, the contents of `request.body` should not be trusted. Instead, you should use `request.path` to fetch the package that was last published:
+In the case of [npme-auth-githb](https://github.com/npm/npme-auth-github), we use the `repository` field in the package.json to determine who has write permissions for a package. After the initial package publication, the contents of `request.body` should not be trusted. Instead, you should use `request.path` to fetch the last version of the package that was published:
 
 ```javascript
 FooAuthorizer.prototype.loadPackageJson = function(request, cb) {
@@ -149,12 +149,32 @@ FooAuthorizer.prototype.loadPackageJson = function(request, cb) {
 };
 ```
 
-## Some Examples
+## Publishing and Installing Your Auth-Plugin
+
+1. publish your auth-plugin to npm, with the following naming convention:
+  * `npme-auth-[my-plugin-name]`.
+
+2. edit your npm Enterprise server's configuration to reference the custom plugin:
+
+```json
+{
+  "args": {
+    "--authentication-method": "foo",
+    "--authorization-method": "foo",
+    "--session-handler": "redis"
+  }
+}
+```
+
+3. install your auth-plugin, `cd /etc/npme; npm install npme-auth-foo`.
+4. regenerate npmE's run-scripts, and restart npme: `npme generate-scripts; npme restart`.
+
+## Some Examples of Auth-Plugins
 
 The example code used in this post is taken from the [npme-auth-foo](https://github.com/bcoe/npme-auth-foo) auth-strategy.
 
-For a much more thorough working example, check out the [npme-auth-github](https://github.com/npm/npme-auth-github) auth strategy. This is the GitHub auth approach currently used by npm Enterprise.
+For a more thorough working example, check out the [npme-auth-github](https://github.com/npm/npme-auth-github) auth strategy. This is default auth approach currently used by npm Enterprise.
 
-This is all the information you should need to know to start writing your own auth-plugins for npm Enterprise.
+That's all you need to know to start writing your own auth-plugins for npm Enterprise!
 
-I can't wait to see what people come up with. As always, let me know if you have any questions.
+I can't wait to see what people come up with.
