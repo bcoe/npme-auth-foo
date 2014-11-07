@@ -92,7 +92,7 @@ cb(null, {
 
 The token you issue should be a unique identifier which allows you to associate future installs and publications with the authenticated user. This is the value that will be stored in the user's `.npmrc`.
 
-In the case of [npme-auth-githb](https://github.com/npm/npme-auth-github), a GitHub application-token is returned. This can be used to authorize future requests against the GitHub API.
+In the case of [npme-auth-github](https://github.com/npm/npme-auth-github), a GitHub application-token is returned. This can be used to authorize future requests against the GitHub API.
 
 ## Writing an Authorizer
 
