@@ -132,7 +132,7 @@ Otherwise `cb` should be executed with a `true` or `false` value, depending on w
 return cb(null, true); // authorization was successful.
 ```
 
-## Looking up Package JSON
+## Looking up a Package
 
 The information stored in `request.body` could potentially contain information that changes package permissions.
 
