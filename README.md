@@ -34,7 +34,7 @@ exports.Authorizer = require('./authorizer.js');
 
 An authenticator handles the user's initial login:
 
-`npm login --scope=@myregistry --registry=http://my-npmee:8080`
+`npm login --scope=@myregistry --registry=http://my-npme:8080`
 
 The authenticator need only expose the single method `authenticate`. Here's an example:
 
