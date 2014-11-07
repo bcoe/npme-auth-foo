@@ -167,7 +167,7 @@ FooAuthorizer.prototype.loadPackageJson = function(request, cb) {
 ```
 
 3. install your auth-plugin, `cd /etc/npme; npm install npme-auth-foo`.
-4. regenerate npmE's run-scripts, and restart npme: `npme generate-scripts; npme restart`.
+4. regenerate npmE's run-scripts and restart npme, `npme generate-scripts; npme restart`.
 
 ## Some Examples of Auth-Plugins
 
