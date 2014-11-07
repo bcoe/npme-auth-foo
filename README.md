@@ -1,4 +1,4 @@
-# Write Your Own Auth-Plugins for npm Enterprise
+# Writing Your Own Auth-Plugins for npm Enterprise
 
 npmE launched with authorization that's tightly integrated with GitHub Enterprise:
 
